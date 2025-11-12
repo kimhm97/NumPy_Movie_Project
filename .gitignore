@@ -1,12 +1,26 @@
-# Python 캐시 및 바이트코드
+# Python 관련
 __pycache__/
 *.pyc
-
-# Jupyter Notebook 자동 저장 체크포인트
-*.ipynb_checkpoints/
-
-# 가상환경
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
 .venv/
 
-# 파이참 프로젝트 설정
+# Jupyter Notebook 체크포인트
+*.ipynb_checkpoints/
+
+# 데이터 폴더 (CSV, API 다운로드 등)
+01_data/
+02_notebooks/output_data/
+*.csv
+*.zip
+
+# PyCharm 설정
 .idea/
+
+# 기타
+.DS_Store
+*.log
