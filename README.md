@@ -51,10 +51,10 @@
 
 ```
 NumPy_Movie_Project/
-├── 01_data/          # CSV 데이터
+├── 01_data/          # CSV 원본 데이터
 ├── 02_notebooks/     # Jupyter Notebook
-├── 03_scripts/       # Python 코드
-├── 04_outputs/       # 분석 결과
+├── 03_scripts/       # Python 분석 코드
+├── 04_outputs/       # 코드 실행 결과 (출력결과 txt | CSV, 그래프 이미지 PNG | JPG | PDF, 보고용 PDF) 
 ├── .gitignore
 ├── README.md
 └── requirements.txt
