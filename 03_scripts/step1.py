@@ -29,7 +29,6 @@ with open(csv_path,"r", encoding="utf-8") as f:
 # 헤더와 데이터 분리 후
 header = parse_csv_line(lines[0]) # 파싱 헤더 추출
 data_lines = lines[1:]            # 데이터 줄만 따로 저장
-print(header)
 
 # 영화 제목, 장르, 평점 컬럼 인덱스 반환
 title_idx = header.index("Title")  # 1
