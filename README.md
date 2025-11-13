@@ -8,7 +8,7 @@
 ## 📌 프로젝트 개요
 
 * **목표:** NumPy를 활용하여 영화 데이터를 분석하고, 장르/연도별 평점 트렌드를 파악합니다.
-* **사용 데이터:** [IMDB Top 1000 CSV](https://www.kaggle.com/datasets/omarhanyy/imdb-top-1000)
+* **사용 데이터:** [IMDB Top 1000 CSV](https://www.kaggle.com/datasets/omarhanyy/imdb-top-1000) (팀원 각자 다운로드 필요 — GitHub에 업로드 금지)
 * **주요 기능:**
 
   1. NumPy 배열을 활용해 영화 데이터 분석
