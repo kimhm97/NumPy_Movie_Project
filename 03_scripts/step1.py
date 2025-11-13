@@ -48,9 +48,12 @@ for line in data_lines:
         continue  # 없다면, 건너 뛴다. 다음 줄을 처리하러 for문 처음으로 돌아감.
 
     # 컬럼 값 가져오기 및 공백 제거
-    title = row[title_idx].strip()
+    Num_title = row[title_idx].strip()
     genre = row[genre_idx].strip()
     rate = row[rate_idx].strip()
+
+    # Title 앞에 있는 숫자 제거
+    title = Num_title.split('.',1)[1].strip() if '.' in Num_title else Num_title
 
     # 결측값 제거 : 빈 문자열이 있으면 해당 행 제외
     if title == "" or genre == "" or rate == "":
@@ -62,8 +65,8 @@ for line in data_lines:
     if '(' in title and title[-1] == ')':
         released_year = title[title.rfind('(')+1 : title.rfind(')')]
     else:
-        # 괄호가 없으면 임의로 0 처리
-        released_year = 0
+        # 괄호가 없으면 임의로 None 처리
+        released_year = None
 
     # Rate와 Released_Year 타입 변환 후 리스트에 추가
     try:
@@ -75,7 +78,6 @@ for line in data_lines:
 # NumPy 배열로 변환
 # dtype=object 사용 : 문자열 + 숫자가 혼합된 배열
 data_array = np.array(processed_data, dtype=object)
-print(data_array)
 
 # 결과 확인
 print("NumPy 배열 형태의 데이터 출력: ", data_array)
