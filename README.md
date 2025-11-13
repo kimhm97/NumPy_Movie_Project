@@ -53,13 +53,22 @@
 
 ```
 NumPy_Movie_Project/
-├── 01_data/          # CSV 원본 데이터
-├── 02_notebooks/     # Jupyter Notebook
-├── 03_scripts/       # Python 분석 코드
-├── 04_outputs/       # 코드 실행 결과 (출력결과 txt | CSV, 그래프 이미지 PNG | JPG | PDF, 보고용 PDF) 
+├── 01_data/                 
+│   └── IMDB_top_1000.csv           # 원본 CSV 데이터
+├── 02_scripts/              
+│   ├── step1.py                    # 데이터 준비 + 전처리
+│   ├── step2.py                    # 기본 데이터 탐색
+│   ├── step3.py                    # 평점 높은 영화 찾기
+│   ├── step4.py                    # 장르별 평균 평점 분석 
+│   └── step5.py                    # 연도별 평균 평점 분석 
+├── 03_outputs/              
+│   ├── results/                    # Step1~5 실행 결과 파일 (CSV, TXT, NPY 등)
+│   └── visualization/              # 시각화 결과 (PNG, PDF 등)
+├── 04_extension/                    # 프로젝트 확장 분석 
 ├── .gitignore
 ├── README.md
 └── requirements.txt
+
 ```
 
 ---
