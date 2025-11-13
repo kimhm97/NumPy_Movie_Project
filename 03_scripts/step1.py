@@ -32,7 +32,7 @@ data_lines = lines[1:]            # 데이터 줄만 따로 저장
 print(header)
 
 # 영화 제목, 장르, 평점 컬럼 인덱스 반환
-title_idx = header.index("Title")   # 1
+title_idx = header.index("Title")  # 1
 genre_idx = header.index("Genre")  # 4
 rate_idx = header.index("Rate")    # 5
 
