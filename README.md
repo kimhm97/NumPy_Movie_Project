@@ -62,7 +62,7 @@ NumPy_Movie_Project/
 │   ├── step4.py                    # 장르별 평균 평점 분석 
 │   └── step5.py                    # 연도별 평균 평점 분석 
 ├── 03_outputs/              
-│   ├── results/                    # Step1~5 실행 결과 파일 (CSV, TXT, NPY 등)
+│   ├── results/                    # Step1~5 실행 결과 파일 
 │   └── visualization/              # 시각화 결과 (PNG, PDF 등)
 ├── 04_extension/                    # 프로젝트 확장 분석 
 ├── .gitignore
