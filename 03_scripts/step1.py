@@ -77,3 +77,7 @@ data_array = np.array(processed_data, dtype=object)
 # 결과 확인
 print("NumPy 배열 형태의 데이터 출력: ", data_array)
 print("\n데이터 크기(shape) 확인: ", data_array.shape)
+
+# NumPy 배열 바이너리 파일로 저장
+np.save("../04_outputs/data_array.npy", data_array)
+
