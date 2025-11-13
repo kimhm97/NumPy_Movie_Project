@@ -64,7 +64,19 @@ NumPy_Movie_Project/
 
 ---
 
+## 💾 데이터 관리 안내
+
+⚠️ **중요:**
+
+- CSV 파일(`IMDB Top 1000.csv`)은 **01_data** 폴더에 수동으로 넣어야 함.
+- 깃허브에는 올리지 않습니다. (용량 제한 & 저작권 문제 방지)
+- 팀원은 Kaggle에서 직접 다운로드 → 로컬 경로에 저장해야 합니다.
+
+👉 이 방식으로 관리해야 데이터 충돌이 생기지 않고,
+각자 환경에서도 동일한 프로젝트 구조로 실행할 수 있습니다.
+
 ## 📝 Step별 진행 가이드
+
 
 ### Step 1: 데이터 준비
 
@@ -104,12 +116,20 @@ NumPy_Movie_Project/
 
 ## ⚙️ 협업 안내
 
-1. GitHub에서 `clone` 후 Python 환경 설정:
+[팀원 실행 순서]
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. 자신이 맡은 Step 작업 후 **Pull Request 제출**
-3. Merge 후 전체 프로젝트 검증
+1️⃣ git clone https://github.com/kimhm97/NumPy_Movie_Project.git
+2️⃣ cd NumPy_Movie_Project
+3️⃣ python -m venv .venv
+4️⃣ .venv\Scripts\activate
+5️⃣ pip install -r requirements.txt
+6️⃣ Kaggle에서 ‘IMDB Top 1000.csv’ 다운로드 후 01_data 폴더에 저장
+7️⃣ 브랜치 생성 후 분석:
+    git checkout -b feature/analysis
+8️⃣ 작업 완료 후:
+    git add .
+    git commit -m "Add visualization"
+    git push origin feature/analysis
+9️⃣ GitHub에서 Pull Request 생성 → Merge
 
 ---
