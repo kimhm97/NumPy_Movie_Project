@@ -64,7 +64,7 @@ NumPy_Movie_Project/
 ├── 03_outputs/              
 │   ├── results/                    # Step 실행 결과 파일 
 │   └── visualization/              # 시각화 결과 (PNG, PDF 등)
-├── 04_extension/                    # 프로젝트 확장 분석 
+├── 04_extension/                   # 프로젝트 확장 분석 
 ├── .gitignore
 ├── README.md
 └── requirements.txt
