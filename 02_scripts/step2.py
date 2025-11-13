@@ -1,7 +1,7 @@
 import numpy as np
 
 # NumPy 배열 불러오기
-data_array = np.load("../04_outputs/data_array.npy", allow_pickle=True)
+data_array = np.load("../03_outputs/results/data_array.npy", allow_pickle=True)
 
 # 총 영화 개수
 total_movies = data_array.shape[0]  # NumPy 배열 행 수 = 영화 개수
