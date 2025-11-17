@@ -4,6 +4,9 @@ import numpy as np
 # allow_pickle = True : 배열 안에 리스트가 포함되어 있어 객체 허용 필요
 data_array = np.load("../03_outputs/results/data_array_extension.npy", allow_pickle=True)
 
+# 사용자 입력으로 특정 감독 지정
+target_dire = input("평균 평점을 알고 싶은 감독 이름을 입력하세요: ").strip()
+
 # 감독별 평균 평점
 director_ratings = {}  # 감독별 평점 리스트를 담을 딕셔너리
 
@@ -15,14 +18,10 @@ for row in data_array:
         director_ratings.setdefault(director, []).append(rate)
 
 
-# 감독별 평균 평점 (소수점 1자리 반올림)
-director_avg = {d: round(sum(r)/len(r), 1) for d, r in director_ratings.items()}
-
-# 평균 평점 기준 내림차순 정렬
-director_avg_sort = sorted(director_avg.items(), key=lambda x: x[1], reverse= True)
-
-# 상위 5명의 감독 출력
-print("감독별 평균 상위 5명")
-for d, avg in director_avg_sort[:5]:
-    print(f"{d}: {avg}")
+# 특정 감독 평균 평점 계산
+if target_dire in director_ratings:
+    avg = round(sum(director_ratings[target_dire])/len(director_ratings[target_dire]),1)
+    print(f"{target_dire} 감독 평균 평점 : {avg}")
+else:
+    print(f"{target_dire} 감독 정보가 데이터에 없습니다.")
 
