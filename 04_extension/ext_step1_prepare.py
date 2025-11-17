@@ -1,0 +1,105 @@
+import numpy as np
+
+# csv 파일 경로
+csv_path = "../01_data/IMDB top 1000.csv"
+
+# csv 파싱 함수 정의
+# 큰 따옴표 언에 있는 쉼표와 바깥에 있는 쉼표 구분
+def parse_csv_line(line):
+    row = []          # 한 줄을 분리한 문자열 담을 리스트
+    current = ""      # 현재 문자열 누적
+    inside_quotes = False   # 큰 따옴표 안에 있는지 여부 체크
+    for char in line:
+        if char == '"' and not inside_quotes:   # 큰 따옴표 시작
+            inside_quotes = True
+        elif char == '"' and inside_quotes:     # 큰 따옴표 종료
+            inside_quotes = False
+        elif char == ',' and not inside_quotes: # 따옴표 밖에 쉼표
+            row.append(current) # 여태 누적된 문자열 리스트 안에 담기
+            current = ""        # 누적 초기화
+        else:
+            current += char      # 문자 누적
+    row.append(current)          # 마지막 문자열 리스트 안에 담기
+    return row                   # for문 밖에서 반환
+
+# csv 파일 읽기
+with open(csv_path,"r", encoding="utf-8") as f:
+    lines = f.read().splitlines()  # 줄 단위 리스트 생성
+
+# 헤더와 데이터 분리 후
+header = parse_csv_line(lines[0]) # 파싱 헤더 추출
+data_lines = lines[1:]            # 데이터 줄만 따로 저장
+
+
+# -----------------------------------------------------------
+# 기존 Step1에서 선택된 컬럼 + 확장용 컬럼 추가
+# -----------------------------------------------------------
+title_idx = header.index("Title")  # 1
+genre_idx = header.index("Genre")  # 4
+rate_idx = header.index("Rate")    # 5
+cast_idx = header.index("Cast")    # 8 -> 확장 Step1 : 감독/배우 정보 파싱용
+
+# 데이터 전처리 리스트 준비
+processed_data = []  # 최종 NumPy 배열로 변환할 데이터 담을 리스트
+
+# 데이터 줄 반복 처리
+for line in data_lines:
+    row = parse_csv_line(line)  # 파싱하여 컬럼 분리
+
+    # row 길이가 필요한 컬럼 중 가장 큰 인덱스보다 작으면 해당 컬럼이 없다는 의미
+    if len(row) <= max(title_idx, genre_idx, rate_idx):
+        continue  # 없다면, 건너 뛴다. 다음 줄을 처리하러 for문 처음으로 돌아감.
+
+    # 컬럼 값 가져오기 및 공백 제거
+    Num_title = row[title_idx].strip()
+    genre = row[genre_idx].strip()
+    rate = row[rate_idx].strip()
+
+    # 확장 step1: Cast 컬럼에서 Direction/Stars 추출
+    cast_info = row[cast_idx].strip()
+    director = []
+    stars = []
+    if "Director:" in cast_info and "| Stars:" in cast_info:
+        # Director 추출
+        director_str = cast_info.split("Director:")[1].split("| Stars:")[0].strip()
+        # Stars 추출
+        stars_str = cast_info.split("| Stars:")[1].strip()
+
+        # ',' 기준으로 리스트 분리 + 공백 제거
+        directors = [d.strip() for d in director_str.split(",") if d.strip()]
+        stars = [s.strip() for s in stars_str.split(",") if s.strip()]
+
+    # Title 앞에 있는 숫자 제거
+    title = Num_title.split('.',1)[1].strip() if '.' in Num_title else Num_title
+
+    # 결측값 제거 : 빈 문자열이 있으면 해당 행 제외
+    if "" in [title, genre, rate] or len(directors) == 0 or len(stars) == 0:
+        continue
+
+    # Title에서 Released_Year 추출
+    # Title 마지막에 () 형태가 있어야만 슬라이싱
+    released_year = None
+    if '(' in title and title[-1] == ')':
+        released_year = title[title.rfind('(')+1 : title.rfind(')')]
+    else:
+        # 괄호가 없으면 임의로 None 처리
+        released_year = None
+
+    # 타입 변환 후 리스트에 추가
+    try:
+        processed_data.append([title, genre, float(rate), int(released_year), directors, stars])
+    except ValueError:
+        # 변환 불가한 값이 있으면 건너뛰기
+        continue
+
+# NumPy 배열로 변환
+# dtype=object 사용 : 문자열 + 숫자가 혼합된 배열
+data_array = np.array(processed_data, dtype=object)
+
+# 결과 확인
+print("NumPy 배열 형태의 데이터 출력: ", data_array)
+print("\n데이터 크기(shape) 확인: ", data_array.shape)
+
+# NumPy 배열 바이너리 파일로 저장
+np.save("../03_outputs/results/data_array_extension.npy", data_array)
+

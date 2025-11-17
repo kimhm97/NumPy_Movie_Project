@@ -67,7 +67,7 @@ NumPy_Movie_Project/
 ├── 04_extension/                   # 프로젝트 확장 분석 
 ├── .gitignore
 ├── README.md
-└── requirements.txt
+└── requirements.txt 
 
 ```
 

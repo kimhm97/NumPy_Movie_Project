@@ -14,7 +14,6 @@ venv/
 
 # 데이터 폴더 (CSV, API 다운로드 등)
 01_data/
-02_notebooks/output_data/
 *.csv
 *.zip
 
