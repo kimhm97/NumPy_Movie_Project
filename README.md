@@ -65,9 +65,13 @@ NumPy_Movie_Project/
 │   ├── results/                    # Step 실행 결과 파일 
 │   └── visualization/              # 시각화 결과 (PNG, PDF 등)
 ├── 04_extension/                   # 프로젝트 확장 분석 
+│   ├── ext_step1_prepare.py        # 확장 분석용 데이터 준비 (감독/배우 컬럼 추가 처리)
+│   ├── ext_step2_director_avg.py   # 특정 감독별 평균 평점 계산
+│   ├── ext_step3_star_avg.py       # 특정 배우별 평균 평점 계산
+│   └── ext_step4_filter_movies.py  # 특정 조건(평점 8.0 이상 & 2000년 이후) 충족 영화 필터링
 ├── .gitignore
 ├── README.md
-└── requirements.txt 
+└── requirements.txt
 
 ```
 
