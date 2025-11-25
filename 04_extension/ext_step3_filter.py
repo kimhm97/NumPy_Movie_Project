@@ -5,12 +5,12 @@ import numpy as np
 # ================================================
 # 파이참 한글 시각화 설정
 # ================================================
-font_path = "C:/Windows/Fonts/malgun.ttf"
+font_path = "C:/Windows/Fonts/malgun.ttf"  # 한글 폰트 경로 (맑은 고딕)
 fontprop = fm.FontProperties(fname=font_path, size=12)
-plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams['axes.unicode_minus'] = False  # 음수 표시 문제 방지
 
 # ==========================================================
-# 데이터 로드 및 필터링
+# 데이터 로드 및 필터링 (평점 8.0 이상, 2000년 이후 제작 영화)
 # ==========================================================
 data_array = np.load("../03_outputs/results/data_array_extension.npy", allow_pickle=True)
 
@@ -25,10 +25,22 @@ for row in data_array:
 
 filtered_array = np.array(filtered, dtype=object)
 
+# ==========================================================
+# 출력: 총 영화 수 및 상위 10개 영화 정보
+# ==========================================================
+print(f"총 영화 수 (평점 {min_rate} 이상 & {min_year}년 이후 제작): {len(filtered_array)}\n")
+print("상위 10개 영화 (평점 높은 순):")
+# 평점 기준 내림차순 정렬
+top10_movies = sorted(filtered_array, key=lambda x: x[1], reverse=True)[:10]
+for movie in top10_movies:
+    print(f"{movie[0]} - 평점: {movie[1]}")
+
+# ==========================================================
+# Dot Plot & 히스토그램을 위한 데이터 준비
+# ==========================================================
 rates = filtered_array[:,1].astype(float)
 years = filtered_array[:,2].astype(int)
 
-# 연도별 평균 평점과 영화 수 계산
 unique_years = np.unique(years)
 avg_rates = []
 movie_counts = []
@@ -43,7 +55,7 @@ sizes = [c*20 for c in movie_counts]  # 점 크기 조정
 # ==========================================================
 # 시각화
 # ==========================================================
-fig, axes = plt.subplots(1, 2, figsize=(14,5))  # 서브플롯 2개, 화면 넓게
+fig, axes = plt.subplots(1, 2, figsize=(14,5))  # 서브플롯 2개
 
 # 1) 히스토그램 - 평점 분포
 axes[0].hist(rates, bins=np.arange(8, 10.1, 0.2), color='lightblue', edgecolor='black')
