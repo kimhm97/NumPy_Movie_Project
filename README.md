@@ -60,7 +60,7 @@ NumPy_Movie_Project/
 │   └── step5.py                    # 연도별 평균 평점 분석 
 ├── 03_outputs/              
 │   ├── results/                    # Step 실행 결과 파일 
-│   └── visualization/              # 시각화 결과 (PNG, PDF 등)
+│   └── visualization/              # Step PNG, PDF 파일 
 ├── 04_extension/                   # 프로젝트 확장 분석 
 │   ├── ext_prepare.py              # 확장 분석용 데이터 준비 (감독/배우 컬럼 추가 처리)
 │   ├── ext_step1_director.py       # 특정 감독별 평균 평점 계산
