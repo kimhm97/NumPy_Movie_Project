@@ -9,7 +9,7 @@ import numpy as np
 font_path = "C:/Windows/Fonts/malgun.ttf"  # 맑은 고딕
 fontprop = fm.FontProperties(fname=font_path, size=12)  # 폰트 속성 객체 생성
 
-# 2️⃣ 음수 표시 문제 방지
+# 음수 표시 문제 방지
 plt.rcParams['axes.unicode_minus'] = False
 
 # ==========================================================
@@ -37,16 +37,28 @@ print("배우별 평균 평점 상위 10명:")
 for s, avg in star_sorted[:10]:
     print(f"{s}: {avg}")
 
+# 상위 10명
+top10_stars = star_sorted[:10]
+names = [s[0] for s in top10_stars][::-1]
+scores = [s[1] for s in top10_stars][::-1]
+
 # ==========================================================
-# 시각화
+# 시각화: Dot Plot
 # ==========================================================
-top10_stars = star_sorted[:10]   # 상위 10명 배우 선택
-names = [s[0] for s in top10_stars]  # 배우 이름만 추출
-scores = [s[1] for s in top10_stars]  # 평균 평점만 추출
 
 plt.figure(figsize=(10,6))
-plt.barh(names[::-1], scores[::-1], color='salmon')
+
+# 점 그래프
+plt.scatter(scores, names, s=120, color='salmon')
+
+# 점 옆에 값 표시
+for x, y in zip(scores, names):
+    plt.text(x + 0.02, y, str(x), va='center', fontproperties=fontprop, fontsize=10)
+
 plt.xlabel("평균 평점", fontproperties=fontprop)
 plt.ylabel("배우 이름", fontproperties=fontprop)
-plt.title("배우별 평균 평점 상위 10명", fontproperties=fontprop)
+plt.title("배우별 평균 평점 상위 10명 (Dot Plot)", fontproperties=fontprop)
+
+plt.grid(axis='x', linestyle='--', alpha=0.3)
+plt.tight_layout()
 plt.show()

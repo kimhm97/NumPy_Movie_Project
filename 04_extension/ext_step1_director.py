@@ -9,7 +9,7 @@ import numpy as np
 font_path = "C:/Windows/Fonts/malgun.ttf"  # 맑은 고딕
 fontprop = fm.FontProperties(fname=font_path, size=12)  # 폰트 속성 객체 생성
 
-# 2️⃣ 음수 표시 문제 방지
+# 음수 표시 문제 방지
 plt.rcParams['axes.unicode_minus'] = False
 
 # ==========================================================
@@ -37,27 +37,31 @@ print("감독별 평균 평점 상위 10명:")
 for d, avg in director_sorted[:10]:
     print(f"{d}: {avg}")
 
+
+# 상위 10명
+top10 = director_sorted[:10]
+
+# 이름과 점수 리스트를 역순으로 (높은 점수가 아래 오지 않도록 보기 좋게)
+names = [item[0] for item in top10][::-1]
+scores = [item[1] for item in top10][::-1]
+
 # ==========================================================
-# 시각화
+# 시각화: Dot Plot
 # ==========================================================
-top10_directors = director_sorted[:10]  # 상위 10명 선택
-names = [d[0] for d in top10_directors]  # 이름 리스트
-scores = [d[1] for d in top10_directors]  # 평균 평점 리스트
 
-# 그래프 크기 설정 (가로, 세로) 단위: 인치
-plt.figure(figsize=(10,6))
+plt.figure(figsize=(10, 6))
 
-# 수평 막대 그래프 그리기, 리스르 뒤집기 ::-1
-plt.barh(names[::-1], scores[::-1], color='skyblue')
+# 점 그래프
+plt.scatter(scores, names, s=120, color='skyblue')
 
-# x축 레이블 설정
+# 값 텍스트 표시
+for x, y in zip(scores, names):
+    plt.text(x + 0.02, y, str(x), va='center', fontproperties=fontprop, fontsize=10)
+
 plt.xlabel("평균 평점", fontproperties=fontprop)
-
-# y축 레이블 설정
 plt.ylabel("감독 이름", fontproperties=fontprop)
+plt.title("감독별 평균 평점 상위 10명 (Dot Plot)", fontproperties=fontprop)
 
-# 그래프 제목 설정
-plt.title("감독별 평균 평점 상위 10명", fontproperties=fontprop)
-
-# 그래프 출력
+plt.grid(axis='x', linestyle='--', alpha=0.3)
+plt.tight_layout()
 plt.show()

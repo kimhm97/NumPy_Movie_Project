@@ -5,21 +5,15 @@ import numpy as np
 # ================================================
 # 파이참 한글 시각화 설정
 # ================================================
-#  한글 폰트 경로 설정
-font_path = "C:/Windows/Fonts/malgun.ttf"  # 맑은 고딕
-fontprop = fm.FontProperties(fname=font_path, size=12)  # 폰트 속성 객체 생성
-
-# 2️⃣ 음수 표시 문제 방지
+font_path = "C:/Windows/Fonts/malgun.ttf"
+fontprop = fm.FontProperties(fname=font_path, size=12)
 plt.rcParams['axes.unicode_minus'] = False
 
 # ==========================================================
-# Step4 filter - 특정 조건 충족하는 영화만 필터링
+# 데이터 로드 및 필터링
 # ==========================================================
-
-# 데이터 로드
 data_array = np.load("../03_outputs/results/data_array_extension.npy", allow_pickle=True)
 
-# 조건 필터링
 min_rate = 8.0
 min_year = 2000
 
@@ -31,20 +25,40 @@ for row in data_array:
 
 filtered_array = np.array(filtered, dtype=object)
 
-# 결과 출력
-print(f"평점 {min_rate} 이상 & {min_year}년 이후 제작 영화 {len(filtered)}개:")
-for movie in filtered_array[:20]:  # 상위 20개만 출력
-    print(f"{movie[0]})")
+rates = filtered_array[:,1].astype(float)
+years = filtered_array[:,2].astype(int)
+
+# 연도별 평균 평점과 영화 수 계산
+unique_years = np.unique(years)
+avg_rates = []
+movie_counts = []
+
+for y in unique_years:
+    y_rates = rates[years == y]
+    avg_rates.append(np.mean(y_rates))
+    movie_counts.append(len(y_rates))
+
+sizes = [c*20 for c in movie_counts]  # 점 크기 조정
 
 # ==========================================================
 # 시각화
 # ==========================================================
-titles = [f[0] for f in filtered_array[:10]]  # 상위 10개 영화 제목
-rates = [f[1] for f in filtered_array[:10]]   # 평점
+fig, axes = plt.subplots(1, 2, figsize=(14,5))  # 서브플롯 2개, 화면 넓게
 
-plt.figure(figsize=(10,6))
-plt.barh(titles[::-1], rates[::-1], color='lightgreen')
-plt.xlabel("평점", fontproperties=fontprop)
-plt.ylabel("영화 제목", fontproperties=fontprop)
-plt.title("평점 8.0 이상 & 2000년 이후 제작 영화 상위 10", fontproperties=fontprop)
+# 1) 히스토그램 - 평점 분포
+axes[0].hist(rates, bins=np.arange(8, 10.1, 0.2), color='lightblue', edgecolor='black')
+axes[0].set_xlabel("평점", fontproperties=fontprop)
+axes[0].set_ylabel("영화 수", fontproperties=fontprop)
+axes[0].set_title("평점 분포 (8.0 이상)", fontproperties=fontprop)
+
+# 2) 연도별 평균 평점 & 영화 수 Dot Plot
+axes[1].scatter(unique_years, avg_rates, s=sizes, color='salmon', alpha=0.6, edgecolor='black')
+for x, y, c in zip(unique_years, avg_rates, movie_counts):
+    axes[1].text(x, y + 0.02, str(c), ha='center', va='bottom', fontproperties=fontprop, fontsize=9)
+axes[1].set_xlabel("제작 연도", fontproperties=fontprop)
+axes[1].set_ylabel("평균 평점", fontproperties=fontprop)
+axes[1].set_title("연도별 평균 평점 & 영화 수", fontproperties=fontprop)
+axes[1].grid(True, linestyle='--', alpha=0.3)
+
+plt.tight_layout()
 plt.show()
